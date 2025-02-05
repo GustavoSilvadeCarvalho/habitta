@@ -21,7 +21,7 @@ const slides = [
     },
 ]
 
-export function CarouselDemo() {
+export function Carousell() {
     return (
         <Carousel className="w-screen h-full text-white">
             <CarouselContent>
