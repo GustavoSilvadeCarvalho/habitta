@@ -34,7 +34,7 @@ export function Carousell() {
                                         <p key={i}>{detail}</p>
                                     ))}
                                 </div>
-                                <h4 className="text-4xl mt-4">{slide.title}</h4>
+                                <h4 className="text-4xl mt-4 text-center">{slide.title}</h4>
                                 <h3 className="mt-4">{slide.value}</h3>
                                 <button className="bg-white text-black py-2 px-4 mt-4 rounded-md">Ver Mais</button>
                             </div>

@@ -1,5 +1,9 @@
+'use client'
+
 import { Filter } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { PropertyCard } from "@/components/property-card/property-card"
@@ -107,25 +111,50 @@ const properties = [
 ]
 
 export default function Imoveis() {
+    const [menuOpen, setMenuOpen] = useState(false);
+
     return (
         <div className="flex flex-col items-center min-h-screen">
-            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-16 p-8 text-black bg-background/95 backdrop-blur">
+            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-background/95 backdrop-blur">
                 <div>
-                    <h4 className="text-xl">Habitta</h4>
+                    <h4 className="text-xl font-bold">Habitta</h4>
                 </div>
-                <div>
-                    <nav>
-                        <ul className="flex space-x-10 text-lg">
-                            <Link href="/"><li>Início</li></Link>
-                            <Link href="/imoveis"><li>Imóveis</li></Link>
-                            <Link href=""><li>Sobre</li></Link>
-                            <Link href=""><li>Contato</li></Link>
-                        </ul>
-                    </nav>
-                </div>
-                <div>
+
+                <nav className="md:flex hidden">
+                    <ul className="flex space-x-10 text-lg">
+                        <Link href="/"><li className="cursor-pointer">Início</li></Link>
+                        <Link href="/imoveis"><li className="cursor-pointer">Imóveis</li></Link>
+                        <Link href="/"><li className="cursor-pointer">Sobre</li></Link>
+                        <Link href="/"><li className="cursor-pointer">Contato</li></Link>
+                    </ul>
+                </nav>
+
+                <div className="hidden md:block">
                     <button className="border px-4 py-2 rounded-md text-lg">Sign In</button>
                 </div>
+
+                <button
+                    className="md:hidden block"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                >
+                    {menuOpen ? <X size={28} /> : <Menu size={28} />}
+                </button>
+
+                {menuOpen && (
+                    <div className="fixed inset-0 top-0 right-0 w-full h-full bg-white p-6 flex flex-col items-center gap-6 md:hidden">
+                        <button
+                            className="absolute top-4 right-8"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            <X size={28} />
+                        </button>
+                        <Link href="/"><li className="cursor-pointer text-lg list-none">Início</li></Link>
+                        <Link href="/imoveis"><li className="cursor-pointer text-lg list-none">Imóveis</li></Link>
+                        <Link href="/"><li className="cursor-pointer text-lg list-none">Sobre</li></Link>
+                        <Link href="/"><li className="cursor-pointer text-lg list-none">Contato</li></Link>
+                        <button className="border px-4 py-2 rounded-md text-lg w-full">Sign In</button>
+                    </div>
+                )}
             </header>
             <main className="flex-1">
                 <div className="container py-8">
