@@ -120,10 +120,10 @@ export default function Imoveis() {
 
     useEffect(() => {
         const typeMap: { [key in "house" | "apartment" | "land" | "commercial"]: string[] } = {
-            house: ["Casa de Luxo", "Casa em Condomínio", "Casa de Campo"],
-            apartment: ["Apartamento Moderno", "Cobertura Duplex", "Apartamento com Vista", "Apartamento de Alto Padrão"],
-            land: ["Terreno em Condomínio"],
-            commercial: ["Sala Comercial"],
+            house: ["Casa"],
+            apartment: ["Apartamento"],
+            land: ["Terreno"],
+            commercial: ["Comercial"],
         }
 
         const filtered = properties.filter((property) => {
