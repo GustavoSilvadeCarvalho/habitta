@@ -112,18 +112,18 @@ const properties = [
 
 export default function Imoveis() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [propertyType, setPropertyType] = useState<"house" | "apartment" | "land" | "commercial" | "">("")
+    const [propertyType, setPropertyType] = useState<"casa" | "apartamento" | "terreno" | "comercial" | "">("")
     const [filteredProperties, setFilteredProperties] = useState(properties)
     const [totalProperties, setTotalProperties] = useState(properties.length)
     const [bedrooms, setBedrooms] = useState<number | null>(null)
     const [bathrooms, setBathrooms] = useState<number | null>(null)
 
     useEffect(() => {
-        const typeMap: { [key in "house" | "apartment" | "land" | "commercial"]: string[] } = {
-            house: ["Casa"],
-            apartment: ["Apartamento"],
-            land: ["Terreno"],
-            commercial: ["Comercial"],
+        const typeMap: { [key in "casa" | "apartamento" | "terreno" | "comercial"]: string[] } = {
+            casa: ["Casa"],
+            apartamento: ["Apartamento"],
+            terreno: ["Terreno"],
+            comercial: ["Comercial"],
         }
 
         const filtered = properties.filter((property) => {
@@ -211,13 +211,13 @@ export default function Imoveis() {
                                     <select
                                         className="w-full h-10 px-3 rounded-md border border-input bg-background"
                                         value={propertyType}
-                                        onChange={(e) => setPropertyType(e.target.value as "house" | "apartment" | "land" | "commercial" | "")}
+                                        onChange={(e) => setPropertyType(e.target.value as "casa" | "apartamento" | "terreno" | "comercial" | "")}
                                     >
                                         <option value="">Todos os tipos</option>
-                                        <option value="house">Casa</option>
-                                        <option value="apartment">Apartamento</option>
-                                        <option value="land">Terreno</option>
-                                        <option value="commercial">Comercial</option>
+                                        <option value="casa">Casa</option>
+                                        <option value="apartamento">Apartamento</option>
+                                        <option value="terreno">Terreno</option>
+                                        <option value="comercial">Comercial</option>
                                     </select>
                                 </div>
                                 <div>
