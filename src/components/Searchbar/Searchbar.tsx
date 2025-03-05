@@ -6,7 +6,7 @@ export default function Searchbar() {
             <div className="flex items-center space-x-2">
                 <div className="flex flex-col justify-center gap-3">
                     <p className="text-neutral-500">Palavra Chave</p>
-                    <p className="text-neutral-300">Digite..</p>
+                    <input type="text" className="bg-transparent border-none text-neutral-300" placeholder="Digite aqui" />
                 </div>
             </div>
 
@@ -15,7 +15,11 @@ export default function Searchbar() {
                 <div className="flex flex-col justify-center gap-3">
                     <p className="text-neutral-500">Status</p>
                     <div>
-                        <p className="text-neutral-300">Todos</p>
+                        <select className="text-neutral-300 bg-transparent border-none">
+                            <option value="Todos">Todos</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
                     </div>
                 </div>
 
@@ -25,7 +29,11 @@ export default function Searchbar() {
                 <div className="flex flex-col justify-center gap-3">
                     <p className="text-neutral-500">Tipo</p>
                     <div>
-                        <p className="text-neutral-300">Todos</p>
+                        <select className="text-neutral-300 bg-transparent border-none">
+                            <option value="Todos">Todos</option>
+                            <option value="Ativo">Casa</option>
+                            <option value="Inativo">Apartamento</option>
+                        </select>
                     </div>
                 </div>
 

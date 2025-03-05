@@ -7,10 +7,10 @@ export default function Header() {
             <div>
                 <nav>
                     <ul className="flex space-x-10 text-lg">
-                        <li>Home</li>
-                        <li>About</li>
-                        <li>Services</li>
-                        <li>Contact</li>
+                        <a href="#"><li>Início</li></a>
+                        <a href="/imoveis"><li>Imóveis</li></a>
+                        <a href=""><li>Sobre</li></a>
+                        <a href=""><li>Contato</li></a>
                     </ul>
                 </nav>
             </div>
