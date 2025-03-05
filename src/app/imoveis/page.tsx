@@ -2,7 +2,7 @@
 
 import { Filter } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
@@ -112,7 +112,47 @@ const properties = [
 
 export default function Imoveis() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [propertyType, setPropertyType] = useState<"house" | "apartment" | "land" | "commercial" | "">("")
+    const [filteredProperties, setFilteredProperties] = useState(properties)
+    const [totalProperties, setTotalProperties] = useState(properties.length)
+    const [bedrooms, setBedrooms] = useState<number | null>(null)
+    const [bathrooms, setBathrooms] = useState<number | null>(null)
 
+    useEffect(() => {
+        const typeMap: { [key in "house" | "apartment" | "land" | "commercial"]: string[] } = {
+            house: ["Casa de Luxo", "Casa em Condomínio", "Casa de Campo"],
+            apartment: ["Apartamento Moderno", "Cobertura Duplex", "Apartamento com Vista", "Apartamento de Alto Padrão"],
+            land: ["Terreno em Condomínio"],
+            commercial: ["Sala Comercial"],
+        }
+
+        const filtered = properties.filter((property) => {
+            const typeMatch =
+                propertyType === "" ||
+                (typeMap[propertyType] &&
+                    typeMap[propertyType].some((keyword) => property.title.toLowerCase().includes(keyword.toLowerCase())))
+
+            const bedroomsMatch = bedrooms === null || property.bedrooms >= bedrooms
+            const bathroomsMatch = bathrooms === null || property.bathrooms >= bathrooms
+
+            return typeMatch && bedroomsMatch && bathroomsMatch
+        })
+
+        setFilteredProperties(filtered)
+        setTotalProperties(filtered.length)
+    }, [propertyType, bedrooms, bathrooms])
+
+    const applyFilters = () => {
+        console.log("Filtros aplicados")
+    }
+
+    const handleBedroomSelection = (num: number) => {
+        setBedrooms((prev) => (prev === num ? null : num))
+    }
+
+    const handleBathroomSelection = (num: number) => {
+        setBathrooms((prev) => (prev === num ? null : num))
+    }
     return (
         <div className="flex flex-col items-center min-h-screen">
             <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-background/95 backdrop-blur">
@@ -168,7 +208,11 @@ export default function Imoveis() {
                             <div className="space-y-4">
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Tipo de Imóvel</label>
-                                    <select className="w-full h-10 px-3 rounded-md border border-input bg-background">
+                                    <select
+                                        className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                                        value={propertyType}
+                                        onChange={(e) => setPropertyType(e.target.value as "house" | "apartment" | "land" | "commercial" | "")}
+                                    >
                                         <option value="">Todos os tipos</option>
                                         <option value="house">Casa</option>
                                         <option value="apartment">Apartamento</option>
@@ -178,21 +222,27 @@ export default function Imoveis() {
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Localização</label>
-                                    <input className="flex bg-white h-9 w-full rounded-md border border-input px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" placeholder="Cidade, Estado" />
+                                    <input placeholder="Cidade, Estado" />
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Preço</label>
                                     <div className="grid grid-cols-2 gap-2">
-                                        <input className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" placeholder="Mínimo" />
-                                        <input className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" placeholder="Máximo" />
+                                        <input placeholder="Mínimo" />
+                                        <input placeholder="Máximo" />
                                     </div>
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Quartos</label>
                                     <div className="flex gap-2">
-                                        {[1, 2, 3, 4, "5+"].map((num) => (
-                                            <Button key={num} variant="outline" size="sm" className="flex-1">
-                                                {num}
+                                        {[1, 2, 3, 4, 5].map((num) => (
+                                            <Button
+                                                key={num}
+                                                variant={bedrooms === num ? "default" : "outline"}
+                                                size="sm"
+                                                className="flex-1"
+                                                onClick={() => handleBedroomSelection(num)}
+                                            >
+                                                {num === 5 ? "5+" : num}
                                             </Button>
                                         ))}
                                     </div>
@@ -200,9 +250,15 @@ export default function Imoveis() {
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Banheiros</label>
                                     <div className="flex gap-2">
-                                        {[1, 2, 3, "4+"].map((num) => (
-                                            <Button key={num} variant="outline" size="sm" className="flex-1">
-                                                {num}
+                                        {[1, 2, 3, 4].map((num) => (
+                                            <Button
+                                                key={num}
+                                                variant={bathrooms === num ? "default" : "outline"}
+                                                size="sm"
+                                                className="flex-1"
+                                                onClick={() => handleBathroomSelection(num)}
+                                            >
+                                                {num === 4 ? "4+" : num}
                                             </Button>
                                         ))}
                                     </div>
@@ -210,16 +266,44 @@ export default function Imoveis() {
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Área (m²)</label>
                                     <div className="grid grid-cols-2 gap-2">
-                                        <input className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" placeholder="Mínima" />
-                                        <input className="flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" placeholder="Máxima" />
+                                        <input placeholder="Mínima" />
+                                        <input placeholder="Máxima" />
                                     </div>
                                 </div>
-                                <Button className="w-full">Aplicar Filtros</Button>
+                                <Button className="w-full" onClick={applyFilters}>
+                                    Aplicar Filtros
+                                </Button>
                             </div>
                         </div>
                         <div>
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                {propertyType && (
+                                    <span className="rounded-full bg-gray-200    px-2 py-1">
+                                        Tipo: {propertyType}
+                                        <button onClick={() => setPropertyType("")} className="ml-2 text-xs">
+                                            &times;
+                                        </button>
+                                    </span>
+                                )}
+                                {bedrooms !== null && (
+                                    <span className="rounded-full bg-gray-200 px-2 py-1">
+                                        Quartos: {bedrooms}+
+                                        <button onClick={() => setBedrooms(null)} className="ml-2 text-xs">
+                                            &times;
+                                        </button>
+                                    </span>
+                                )}
+                                {bathrooms !== null && (
+                                    <span className="rounded-full bg-gray-200 px-2 py-1">
+                                        Banheiros: {bathrooms}+
+                                        <button onClick={() => setBathrooms(null)} className="ml-2 text-xs">
+                                            &times;
+                                        </button>
+                                    </span>
+                                )}
+                            </div>
                             <div className="flex justify-between items-center mb-6">
-                                <p className="text-muted-foreground">Mostrando {properties.length} imóveis</p>
+                                <p className="text-muted-foreground">Mostrando {totalProperties} imóveis</p>
                                 <select className="h-10 px-3 rounded-md border border-input bg-background">
                                     <option value="newest">Mais recentes</option>
                                     <option value="price-asc">Menor preço</option>
@@ -228,56 +312,65 @@ export default function Imoveis() {
                                     <option value="area-desc">Maior área</option>
                                 </select>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {properties.map((property) => (
-                                    <PropertyCard key={property.id} {...property} />
-                                ))}
-                            </div>
-                            <div className="flex justify-center mt-8">
-                                <div className="flex">
-                                    <Button variant="outline" size="icon" disabled>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="h-4 w-4"
-                                        >
-                                            <path d="m15 18-6-6 6-6" />
-                                        </svg>
-                                    </Button>
-                                    <Button variant="outline" className="rounded-none bg-primary text-primary-foreground">
-                                        1
-                                    </Button>
-                                    <Button variant="outline" className="rounded-none">
-                                        2
-                                    </Button>
-                                    <Button variant="outline" className="rounded-none">
-                                        3
-                                    </Button>
-                                    <Button variant="outline" size="icon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="h-4 w-4"
-                                        >
-                                            <path d="m9 18 6-6-6-6" />
-                                        </svg>
-                                    </Button>
+                            {filteredProperties.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {filteredProperties.map((property) => (
+                                        <PropertyCard key={property.id} {...property} />
+                                    ))}
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="text-center py-12">
+                                    <p className="text-xl font-medium">Nenhum imóvel encontrado com os filtros selecionados.</p>
+                                    <p className="text-muted-foreground mt-2">Tente ajustar seus critérios de busca.</p>
+                                </div>
+                            )}
+                            {filteredProperties.length > 0 && (
+                                <div className="flex justify-center mt-8">
+                                    <div className="flex">
+                                        <Button variant="outline" size="icon" disabled>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="h-4 w-4"
+                                            >
+                                                <path d="m15 18-6-6 6-6" />
+                                            </svg>
+                                        </Button>
+                                        <Button variant="outline" className="rounded-none bg-primary text-primary-foreground">
+                                            1
+                                        </Button>
+                                        <Button variant="outline" className="rounded-none">
+                                            2
+                                        </Button>
+                                        <Button variant="outline" className="rounded-none">
+                                            3
+                                        </Button>
+                                        <Button variant="outline" size="icon">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="h-4 w-4"
+                                            >
+                                                <path d="m9 18 6-6-6-6" />
+                                            </svg>
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

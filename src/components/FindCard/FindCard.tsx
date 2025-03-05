@@ -35,7 +35,7 @@ export default function FindCard() {
 
 
     return (
-        <div className="flex flex-wrap justify-center gap-6 p-8">
+        <div className="flex flex-wrap justify-center gap-6 p-8 pb-0">
             {cards.map(({ id, image, title, description }) => (
                 <div
                     key={id}
