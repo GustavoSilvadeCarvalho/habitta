@@ -26,6 +26,8 @@ export default function Imoveis() {
     const [location, setLocation] = useState<string>(searchParams.get("location") || "")
     const [minPrice, setMinPrice] = useState<number | "">("")
     const [maxPrice, setMaxPrice] = useState<number | "">("")
+    const [minArea, setMinArea] = useState<string>("")
+    const [maxArea, setMaxArea] = useState<string>("")
 
     useEffect(() => {
         const typeMap: { [key in "casa" | "apartamento" | "terreno" | "comercial" | "mansão"]: string[] } = {
@@ -77,14 +79,21 @@ export default function Imoveis() {
             filtered = filtered.filter((property) => property.price >= minPrice)
         }
 
-        // Filtrar por preço máximo
         if (maxPrice !== "") {
             filtered = filtered.filter((property) => property.price <= maxPrice)
         }
 
+        if (minArea) {
+            filtered = filtered.filter((property) => property.area >= Number.parseInt(minArea))
+        }
+
+        if (maxArea) {
+            filtered = filtered.filter((property) => property.area <= Number.parseInt(maxArea))
+        }
+
         setFilteredProperties(filtered)
         setTotalProperties(filtered.length)
-    }, [propertyType, bedrooms, bathrooms, sortOption, location, minPrice, maxPrice])
+    }, [propertyType, bedrooms, bathrooms, sortOption, location, minPrice, maxPrice, minArea, maxArea])
 
     const handleBedroomSelection = (num: number) => {
         setBedrooms((prev) => (prev === num ? null : num))
@@ -102,6 +111,8 @@ export default function Imoveis() {
         setSortOption("newest")
         setMinPrice("")
         setMaxPrice("")
+        setMinArea("")
+        setMaxArea("")
     }
 
     return (
@@ -236,8 +247,20 @@ export default function Imoveis() {
                                     <div>
                                         <label className="text-sm font-medium mb-1 block">Área (m²)</label>
                                         <div className="grid grid-cols-2 gap-2">
-                                            <input placeholder="Mínima" />
-                                            <input placeholder="Máxima" />
+                                            <input
+                                                className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                                                placeholder="Mínima"
+                                                type="number"
+                                                value={minArea}
+                                                onChange={(e) => setMinArea(e.target.value)}
+                                            />
+                                            <input
+                                                className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                                                placeholder="Máxima"
+                                                type="number"
+                                                value={maxArea}
+                                                onChange={(e) => setMaxArea(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <Button className="w-full" onClick={clearFilters}>
