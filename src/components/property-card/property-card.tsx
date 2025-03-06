@@ -68,7 +68,7 @@ export function PropertyCard({
                     </div>
                 </div>
                 <Link href={`/properties/${id}`} className="block">
-                    <button className="w-full bg-[#171717] text-white py-2 rounded hover:bg-blue-700 transition">
+                    <button className="w-full bg-[#171717] text-white py-2 rounded hover:bg-[#a1a1a1] transition">
                         Ver Detalhes
                     </button>
                 </Link>

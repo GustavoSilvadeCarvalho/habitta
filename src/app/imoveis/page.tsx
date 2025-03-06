@@ -8,117 +8,20 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { PropertyCard } from "@/components/property-card/property-card"
 
-const properties = [
-    {
-        id: "1",
-        title: "Apartamento de Luxo em NY",
-        price: 100000000,
-        location: "Nova York, NY",
-        bedrooms: 3,
-        bathrooms: 4,
-        area: 250,
-        imageUrl: "/livingroom.jpeg",
-        type: "sale" as const,
-    },
-    {
-        id: "2",
-        title: "Apartamento Luxuoso em Los Angeles",
-        price: 40500000,
-        location: "Los Angeles, CA",
-        bedrooms: 2,
-        bathrooms: 3,
-        area: 190,
-        imageUrl: "/livingroom2.jpeg",
-        type: "sale" as const,
-    },
-    {
-        id: "3",
-        title: "Apartamento Moderno em Paris",
-        price: 10000000,
-        location: "Paris, FR",
-        bedrooms: 2,
-        bathrooms: 3,
-        area: 123,
-        imageUrl: "/livingroom3.jpeg",
-        type: "sale" as const,
-    },
-    {
-        id: "4",
-        title: "Apartamento de Luxo em Miami",
-        price: 25000000,
-        location: "Miami, FL",
-        bedrooms: 3,
-        bathrooms: 4,
-        area: 210,
-        imageUrl: "/livingroom4.jpg",
-        type: "sale" as const,
-    },
-    {
-        id: "5",
-        title: "Cobertura Exclusiva em Londres",
-        price: 85000000,
-        location: "Londres, UK",
-        bedrooms: 4,
-        bathrooms: 5,
-        area: 300,
-        imageUrl: "/livingroom5.jpg",
-        type: "sale" as const,
-    },
-    {
-        id: "6",
-        title: "Sala Comercial no Centro Empresarial",
-        price: 1000000,
-        location: "Londres, UK",
-        bedrooms: 0,
-        bathrooms: 1,
-        area: 60,
-        imageUrl: "/comercial.jpg",
-        type: "sale" as const,
-    },
-    {
-        id: "7",
-        title: "Casa de Campo",
-        price: 200000000,
-        location: "Hawick, UK",
-        bedrooms: 6,
-        bathrooms: 8,
-        area: 2000,
-        imageUrl: "/campo.jpg",
-        type: "sale" as const,
-    },
-    {
-        id: "8",
-        title: "Apartamento de Alto Padrão",
-        price: 7500,
-        location: "São Paulo, SP",
-        bedrooms: 3,
-        bathrooms: 3,
-        area: 120,
-        imageUrl: "/placeholder.svg?height=200&width=300&text=Apartamento+Luxo",
-        type: "rent" as const,
-    },
-    {
-        id: "9",
-        title: "Mansão em Calabasas",
-        price: 50000000,
-        location: "Calabasas, CA",
-        bedrooms: 7,
-        bathrooms: 10,
-        area: 800,
-        imageUrl: "/mansao.jpeg",
-        type: "sale" as const,
-    },
-]
+import { properties } from "@/data/imoveis"
+
+import { useSearchParams } from "next/navigation"
 
 export default function Imoveis() {
+    const searchParams = useSearchParams()
     const [menuOpen, setMenuOpen] = useState(false);
-    const [propertyType, setPropertyType] = useState<"casa" | "apartamento" | "terreno" | "comercial" | "mansão" | "">("")
+    const [propertyType, setPropertyType] = useState<string>(searchParams.get("type") || "")
     const [filteredProperties, setFilteredProperties] = useState(properties)
     const [totalProperties, setTotalProperties] = useState(properties.length)
     const [bedrooms, setBedrooms] = useState<number | null>(null)
     const [bathrooms, setBathrooms] = useState<number | null>(null)
     const [sortOption, setSortOption] = useState<string>("newest")
-    const [location, setLocation] = useState<string>("")
+    const [location, setLocation] = useState<string>(searchParams.get("location") || "")
     const [minPrice, setMinPrice] = useState<number | "">("")
     const [maxPrice, setMaxPrice] = useState<number | "">("")
 
@@ -134,8 +37,8 @@ export default function Imoveis() {
         let filtered = properties.filter((property) => {
             const typeMatch =
                 propertyType === "" ||
-                (typeMap[propertyType] &&
-                    typeMap[propertyType].some((keyword) => property.title.toLowerCase().includes(keyword.toLowerCase())))
+                (typeMap[propertyType as keyof typeof typeMap] &&
+                    typeMap[propertyType as keyof typeof typeMap].some((keyword) => property.title.toLowerCase().includes(keyword.toLowerCase())))
 
             const bedroomsMatch = bedrooms === null || property.bedrooms >= bedrooms
             const bathroomsMatch = bathrooms === null || property.bathrooms >= bathrooms
