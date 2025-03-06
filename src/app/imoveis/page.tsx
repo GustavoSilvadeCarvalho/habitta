@@ -44,46 +44,46 @@ const properties = [
     },
     {
         id: "4",
-        title: "Casa em Condomínio Fechado",
-        price: 850000,
-        location: "Campinas, SP",
+        title: "Apartamento de Luxo em Miami",
+        price: 25000000,
+        location: "Miami, FL",
         bedrooms: 3,
-        bathrooms: 2,
-        area: 150,
-        imageUrl: "/placeholder.svg?height=200&width=300&text=Casa+Condomínio",
+        bathrooms: 4,
+        area: 210,
+        imageUrl: "/livingroom4.jpg",
         type: "sale" as const,
     },
     {
         id: "5",
-        title: "Apartamento com Vista para o Parque",
-        price: 4200,
-        location: "Belo Horizonte, MG",
-        bedrooms: 2,
-        bathrooms: 2,
-        area: 85,
-        imageUrl: "/placeholder.svg?height=200&width=300&text=Apartamento+Parque",
-        type: "rent" as const,
+        title: "Cobertura Exclusiva em Londres",
+        price: 85000000,
+        location: "Londres, UK",
+        bedrooms: 4,
+        bathrooms: 5,
+        area: 300,
+        imageUrl: "/livingroom5.jpg",
+        type: "sale" as const,
     },
     {
         id: "6",
         title: "Sala Comercial no Centro Empresarial",
-        price: 650000,
-        location: "Brasília, DF",
+        price: 1000000,
+        location: "Londres, UK",
         bedrooms: 0,
         bathrooms: 1,
         area: 60,
-        imageUrl: "/placeholder.svg?height=200&width=300&text=Sala+Comercial",
+        imageUrl: "/comercial.jpg",
         type: "sale" as const,
     },
     {
         id: "7",
-        title: "Casa de Campo com Amplo Terreno",
-        price: 920000,
-        location: "Atibaia, SP",
-        bedrooms: 4,
-        bathrooms: 3,
-        area: 300,
-        imageUrl: "/placeholder.svg?height=200&width=300&text=Casa+de+Campo",
+        title: "Casa de Campo",
+        price: 200000000,
+        location: "Hawick, UK",
+        bedrooms: 6,
+        bathrooms: 8,
+        area: 2000,
+        imageUrl: "/campo.jpg",
         type: "sale" as const,
     },
     {
@@ -99,31 +99,32 @@ const properties = [
     },
     {
         id: "9",
-        title: "Terreno em Condomínio de Luxo",
-        price: 450000,
-        location: "Itu, SP",
-        bedrooms: 0,
-        bathrooms: 0,
-        area: 500,
-        imageUrl: "/placeholder.svg?height=200&width=300&text=Terreno",
+        title: "Mansão em Calabasas",
+        price: 50000000,
+        location: "Calabasas, CA",
+        bedrooms: 7,
+        bathrooms: 10,
+        area: 800,
+        imageUrl: "/mansao.jpeg",
         type: "sale" as const,
     },
 ]
 
 export default function Imoveis() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [propertyType, setPropertyType] = useState<"casa" | "apartamento" | "terreno" | "comercial" | "">("")
+    const [propertyType, setPropertyType] = useState<"casa" | "apartamento" | "terreno" | "comercial" | "mansão" | "">("")
     const [filteredProperties, setFilteredProperties] = useState(properties)
     const [totalProperties, setTotalProperties] = useState(properties.length)
     const [bedrooms, setBedrooms] = useState<number | null>(null)
     const [bathrooms, setBathrooms] = useState<number | null>(null)
 
     useEffect(() => {
-        const typeMap: { [key in "casa" | "apartamento" | "terreno" | "comercial"]: string[] } = {
+        const typeMap: { [key in "casa" | "apartamento" | "terreno" | "comercial" | "mansão"]: string[] } = {
             casa: ["Casa"],
-            apartamento: ["Apartamento"],
+            apartamento: ["Apartamento", "Cobertura"],
             terreno: ["Terreno"],
             comercial: ["Comercial"],
+            mansão: ["Mansão"],
         }
 
         const filtered = properties.filter((property) => {
@@ -211,13 +212,14 @@ export default function Imoveis() {
                                     <select
                                         className="w-full h-10 px-3 rounded-md border border-input bg-background"
                                         value={propertyType}
-                                        onChange={(e) => setPropertyType(e.target.value as "casa" | "apartamento" | "terreno" | "comercial" | "")}
+                                        onChange={(e) => setPropertyType(e.target.value as "casa" | "apartamento" | "terreno" | "comercial" | "mansão" | "")}
                                     >
                                         <option value="">Todos os tipos</option>
                                         <option value="casa">Casa</option>
                                         <option value="apartamento">Apartamento</option>
                                         <option value="terreno">Terreno</option>
                                         <option value="comercial">Comercial</option>
+                                        <option value="mansão">Mansão</option>
                                     </select>
                                 </div>
                                 <div>
