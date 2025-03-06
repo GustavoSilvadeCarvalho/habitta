@@ -117,6 +117,10 @@ export default function Imoveis() {
     const [totalProperties, setTotalProperties] = useState(properties.length)
     const [bedrooms, setBedrooms] = useState<number | null>(null)
     const [bathrooms, setBathrooms] = useState<number | null>(null)
+    const [sortOption, setSortOption] = useState<string>("newest")
+    const [location, setLocation] = useState<string>("")
+    const [minPrice, setMinPrice] = useState<number | "">("")
+    const [maxPrice, setMaxPrice] = useState<number | "">("")
 
     useEffect(() => {
         const typeMap: { [key in "casa" | "apartamento" | "terreno" | "comercial" | "mansão"]: string[] } = {
@@ -127,7 +131,7 @@ export default function Imoveis() {
             mansão: ["Mansão"],
         }
 
-        const filtered = properties.filter((property) => {
+        let filtered = properties.filter((property) => {
             const typeMatch =
                 propertyType === "" ||
                 (typeMap[propertyType] &&
@@ -139,13 +143,43 @@ export default function Imoveis() {
             return typeMatch && bedroomsMatch && bathroomsMatch
         })
 
+        switch (sortOption) {
+            case "price-asc":
+                filtered.sort((a, b) => a.price - b.price)
+                break
+            case "price-desc":
+                filtered.sort((a, b) => b.price - a.price)
+                break
+            case "area-asc":
+                filtered.sort((a, b) => a.area - b.area)
+                break
+            case "area-desc":
+                filtered.sort((a, b) => b.area - a.area)
+                break
+            case "newest":
+            default:
+                filtered.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
+                break
+        }
+
+        if (location) {
+            filtered = filtered.filter((property) =>
+                property.location.toLowerCase().includes(location.toLowerCase())
+            )
+        }
+
+        if (minPrice !== "") {
+            filtered = filtered.filter((property) => property.price >= minPrice)
+        }
+
+        // Filtrar por preço máximo
+        if (maxPrice !== "") {
+            filtered = filtered.filter((property) => property.price <= maxPrice)
+        }
+
         setFilteredProperties(filtered)
         setTotalProperties(filtered.length)
-    }, [propertyType, bedrooms, bathrooms])
-
-    const applyFilters = () => {
-        console.log("Filtros aplicados")
-    }
+    }, [propertyType, bedrooms, bathrooms, sortOption, location, minPrice, maxPrice])
 
     const handleBedroomSelection = (num: number) => {
         setBedrooms((prev) => (prev === num ? null : num))
@@ -154,6 +188,17 @@ export default function Imoveis() {
     const handleBathroomSelection = (num: number) => {
         setBathrooms((prev) => (prev === num ? null : num))
     }
+
+    const clearFilters = () => {
+        setPropertyType("")
+        setLocation("")
+        setBedrooms(null)
+        setBathrooms(null)
+        setSortOption("newest")
+        setMinPrice("")
+        setMaxPrice("")
+    }
+
     return (
         <div className="flex flex-col items-center min-h-screen">
             <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white">
@@ -224,13 +269,30 @@ export default function Imoveis() {
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Localização</label>
-                                    <input placeholder="Cidade, Estado" />
+                                    <input
+                                        className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                                        id="location"
+                                        placeholder="Cidade, Estado"
+                                        value={location}
+                                        onChange={(e) => setLocation(e.target.value)}
+                                    />
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Preço</label>
                                     <div className="grid grid-cols-2 gap-2">
-                                        <input placeholder="Mínimo" />
-                                        <input placeholder="Máximo" />
+                                        <input
+                                            className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                                            placeholder="Mínimo"
+                                            type="number"
+                                            value={minPrice}
+                                            onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : "")} />
+                                        <input
+                                            className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                                            placeholder="Máximo"
+                                            type="number"
+                                            value={maxPrice}
+                                            onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : "")}
+                                        />
                                     </div>
                                 </div>
                                 <div>
@@ -272,8 +334,8 @@ export default function Imoveis() {
                                         <input placeholder="Máxima" />
                                     </div>
                                 </div>
-                                <Button className="w-full" onClick={applyFilters}>
-                                    Aplicar Filtros
+                                <Button className="w-full" onClick={clearFilters}>
+                                    Remover Filtros
                                 </Button>
                             </div>
                         </div>
@@ -306,7 +368,7 @@ export default function Imoveis() {
                             </div>
                             <div className="flex justify-between items-center mb-6">
                                 <p className="text-muted-foreground">Mostrando {totalProperties} imóveis</p>
-                                <select className="h-10 px-3 rounded-md border border-input bg-background">
+                                <select className="h-10 px-3 rounded-md border border-input bg-background" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
                                     <option value="newest">Mais recentes</option>
                                     <option value="price-asc">Menor preço</option>
                                     <option value="price-desc">Maior preço</option>
