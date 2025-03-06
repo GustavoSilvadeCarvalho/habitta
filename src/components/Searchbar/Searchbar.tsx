@@ -21,7 +21,7 @@ export default function Searchbar() {
             <div className="flex flex-col w-full md:w-auto mr-auto">
                 <p className="text-neutral-500 ml-1">Tipo de imóvel</p>
                 <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className="text-neutral-300 bg-transparent md:border-none border-b border-neutral-700 focus:outline-none w-full">
-                    <option value="Todos">Todos</option>
+                    <option value="">Todos</option>
                     <option value="casa">Casa</option>
                     <option value="apartamento">Apartamento</option>
                     <option value="terreno">Terreno</option>
