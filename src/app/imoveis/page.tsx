@@ -156,7 +156,7 @@ export default function Imoveis() {
     }
     return (
         <div className="flex flex-col items-center min-h-screen">
-            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-background/95 backdrop-blur">
+            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white">
                 <div>
                     <h4 className="text-xl font-bold">Habitta</h4>
                 </div>
@@ -165,8 +165,8 @@ export default function Imoveis() {
                     <ul className="flex space-x-10 text-lg">
                         <Link href="/"><li className="cursor-pointer">Início</li></Link>
                         <Link href="/imoveis"><li className="cursor-pointer">Imóveis</li></Link>
-                        <Link href="/"><li className="cursor-pointer">Sobre</li></Link>
-                        <Link href="/"><li className="cursor-pointer">Contato</li></Link>
+                        <Link href="/sobre"><li className="cursor-pointer">Sobre</li></Link>
+                        <Link href="/contato"><li className="cursor-pointer">Contato</li></Link>
                     </ul>
                 </nav>
 
@@ -191,8 +191,8 @@ export default function Imoveis() {
                         </button>
                         <Link href="/"><li className="cursor-pointer text-lg list-none">Início</li></Link>
                         <Link href="/imoveis"><li className="cursor-pointer text-lg list-none">Imóveis</li></Link>
-                        <Link href="/"><li className="cursor-pointer text-lg list-none">Sobre</li></Link>
-                        <Link href="/"><li className="cursor-pointer text-lg list-none">Contato</li></Link>
+                        <Link href="/sobre"><li className="cursor-pointer text-lg list-none">Sobre</li></Link>
+                        <Link href="/contato"><li className="cursor-pointer text-lg list-none">Contato</li></Link>
                         <button className="border px-4 py-2 rounded-md text-lg w-full">Sign In</button>
                     </div>
                 )}
