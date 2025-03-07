@@ -160,7 +160,7 @@ export default function Imoveis() {
             </header>
             <main className="flex-1">
                 <div className="container py-8">
-                    <h1 className="text-3xl font-bold mb-8">Imóveis Disponíveis</h1>
+                    <h1 className="text-3xl font-bold mb-8 text-center">Imóveis Disponíveis</h1>
                     <Suspense fallback={<div>Carregando...</div>}>
                         <div className="grid md:grid-cols-[300px_1fr] gap-8">
                             <div className="bg-muted p-6 rounded-lg h-fit">

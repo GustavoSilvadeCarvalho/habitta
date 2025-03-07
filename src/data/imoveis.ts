@@ -99,3 +99,30 @@ export const properties = [
     type: "sale" as const,
   },
 ];
+
+export const testimonials = [
+  {
+    id: "1",
+    name: "Ana Silva",
+    role: "Compradora",
+    content:
+      "Encontrei a casa dos meus sonhos graças à ImóveisJá. O processo foi rápido e sem complicações. Recomendo a todos!",
+    avatar: "/placeholder.svg?height=60&width=60",
+  },
+  {
+    id: "2",
+    name: "Carlos Oliveira",
+    role: "Vendedor",
+    content:
+      "Vendi meu apartamento em menos de um mês com a ImóveisJá. A equipe é profissional e eficiente. Excelente serviço!",
+    avatar: "/placeholder.svg?height=60&width=60",
+  },
+  {
+    id: "3",
+    name: "Mariana Santos",
+    role: "Investidora",
+    content:
+      "Como investidora imobiliária, confio na ImóveisJá para encontrar as melhores oportunidades. Sempre com transparência e honestidade.",
+    avatar: "/placeholder.svg?height=60&width=60",
+  },
+];
