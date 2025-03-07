@@ -1,23 +1,27 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import Link from "next/link"
 
 const slides = [
     {
         image: "/livingroom.jpeg",
         title: "Apartamento de Luxo em NY",
         details: ["3 Quartos", "4 Banheiros", "250m²"],
-        value: "R$ 100.000.000"
+        value: "R$ 100.000.000",
+        url: "/imoveis/1"
     },
     {
         image: "/livingroom2.jpeg",
         title: "Apartamento Luxuoso em Los Angeles",
         details: ["2 Quartos", "3 Banheiros", "190m²"],
-        value: "R$ 40.500.000"
+        value: "R$ 40.500.000",
+        url: "/imoveis/2"
     },
     {
         image: "/livingroom3.jpeg",
         title: "Apartamento Moderno em Paris",
         details: ["2 Quartos", "3 Banheiros", "123m²"],
-        value: "R$ 10.000.000"
+        value: "R$ 10.000.000",
+        url: "/imoveis/3"
     },
 ]
 
@@ -36,7 +40,7 @@ export function Carousell() {
                                 </div>
                                 <h4 className="text-4xl mt-4 text-center">{slide.title}</h4>
                                 <h3 className="mt-4">{slide.value}</h3>
-                                <button className="bg-white text-black py-2 px-4 mt-4 rounded-md">Ver Mais</button>
+                                <Link href={slide.url}><button className="bg-white text-black py-2 px-4 mt-4 rounded-md">Ver Mais</button></Link>
                             </div>
                         </div>
                     </CarouselItem>

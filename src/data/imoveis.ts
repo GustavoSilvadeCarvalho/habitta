@@ -16,7 +16,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -49,7 +49,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -82,7 +82,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -115,7 +115,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -148,7 +148,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -181,7 +181,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -214,7 +214,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -247,7 +247,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
@@ -280,7 +280,7 @@ export const properties = [
     agent: {
       name: "Roberto Almeida",
       phone: "(11) 99999-8888",
-      email: "roberto@imoveisja.com.br",
+      email: "roberto@habitta.com.br",
       avatar: "/placeholder.svg?height=100&width=100",
     },
     features: [
