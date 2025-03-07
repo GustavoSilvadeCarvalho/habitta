@@ -12,12 +12,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { notFound } from "next/navigation";
 import Similar from "@/components/Similar/Similar"
 
-interface PropertyDetailPageProps {
-    params: { id: string };
-}
-
-export default function PropertyDetailPage({ params }: PropertyDetailPageProps) {
-    const property = properties.find((p) => p.id === params.id);
+export default function PropertyDetailPage({ params }: { params: { id: string } }) {
+    const { id } = params;
+    const property = properties.find((p) => p.id === id);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
