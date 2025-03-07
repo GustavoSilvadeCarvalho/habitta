@@ -67,7 +67,7 @@ export function PropertyCard({
                         <span className="text-sm">{area} m²</span>
                     </div>
                 </div>
-                <Link href={`/properties/${id}`} className="block">
+                <Link href={`/imoveis/${id}`} className="block">
                     <button className="w-full bg-[#171717] text-white py-2 rounded hover:bg-[#a1a1a1] transition">
                         Ver Detalhes
                     </button>
