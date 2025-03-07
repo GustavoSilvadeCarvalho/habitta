@@ -1,5 +1,6 @@
 "use client"
 
+import { useParams } from "next/navigation";
 import Image from "next/image"
 import Link from "next/link"
 import { Bath, Bed, Calendar, ChevronRight, Home, MapPin, Maximize, Phone, Menu, X } from "lucide-react"
@@ -12,7 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { notFound } from "next/navigation";
 import Similar from "@/components/Similar/Similar"
 
-export default function PropertyDetailPage({ params }: { params: { id: string } }) {
+export default function PropertyDetailPage() {
+    const params = useParams();
     const { id } = params;
     const property = properties.find((p) => p.id === id);
 
