@@ -3,7 +3,7 @@
 import { Filter } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { PropertyCard } from "@/components/property-card/property-card"
@@ -15,6 +15,8 @@ import { useSearchParams } from "next/navigation"
 import { Suspense } from 'react'
 
 export default function Imoveis() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [sortOpen, setSortOpen] = useState(false);
     const searchParams = useSearchParams()
     const [menuOpen, setMenuOpen] = useState(false);
     const [propertyType, setPropertyType] = useState<string>(searchParams.get("type") || "")
@@ -28,6 +30,7 @@ export default function Imoveis() {
     const [maxPrice, setMaxPrice] = useState<number | "">("")
     const [minArea, setMinArea] = useState<string>("")
     const [maxArea, setMaxArea] = useState<string>("")
+    const [transactionType, setTransactionType] = useState<"sale" | "rent" | "">("")
 
     useEffect(() => {
         const typeMap: { [key in "casa" | "apartamento" | "terreno" | "comercial" | "mansão"]: string[] } = {
@@ -91,9 +94,13 @@ export default function Imoveis() {
             filtered = filtered.filter((property) => property.area <= Number.parseInt(maxArea))
         }
 
+        if (transactionType) {
+            filtered = filtered.filter((property) => property.type === transactionType)
+        }
+
         setFilteredProperties(filtered)
         setTotalProperties(filtered.length)
-    }, [propertyType, bedrooms, bathrooms, sortOption, location, minPrice, maxPrice, minArea, maxArea])
+    }, [propertyType, bedrooms, bathrooms, sortOption, location, minPrice, maxPrice, minArea, maxArea, transactionType,])
 
     const handleBedroomSelection = (num: number) => {
         setBedrooms((prev) => (prev === num ? null : num))
@@ -101,6 +108,10 @@ export default function Imoveis() {
 
     const handleBathroomSelection = (num: number) => {
         setBathrooms((prev) => (prev === num ? null : num))
+    }
+
+    const toggleTransactionType = (type: "sale" | "rent") => {
+        setTransactionType((prev) => (prev === type ? "" : type))
     }
 
     const clearFilters = () => {
@@ -113,13 +124,14 @@ export default function Imoveis() {
         setMaxPrice("")
         setMinArea("")
         setMaxArea("")
+        setTransactionType("")
     }
 
     return (
         <div className="flex flex-col items-center min-h-screen">
-            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white">
+            <header className="sticky top-0 z-20 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white/70 backdrop-blur">
                 <div>
-                    <h4 className="text-xl font-bold">Habitta</h4>
+                    <Link href="/"><h4 className="text-xl font-bold">Habitta</h4></Link>
                 </div>
 
                 <nav className="md:flex hidden">
@@ -169,20 +181,70 @@ export default function Imoveis() {
                                     <Filter className="h-5 w-5" />
                                 </div>
                                 <div className="space-y-4">
-                                    <div>
-                                        <label className="text-sm font-medium mb-1 block">Tipo de Imóvel</label>
-                                        <select
-                                            className="w-full h-10 px-3 rounded-md border border-input bg-background"
-                                            value={propertyType}
-                                            onChange={(e) => setPropertyType(e.target.value as "casa" | "apartamento" | "terreno" | "comercial" | "mansão" | "")}
-                                        >
-                                            <option value="">Todos os tipos</option>
-                                            <option value="casa">Casa</option>
-                                            <option value="apartamento">Apartamento</option>
-                                            <option value="terreno">Terreno</option>
-                                            <option value="comercial">Comercial</option>
-                                            <option value="mansão">Mansão</option>
-                                        </select>
+                                    <div className="space-y-6">
+                                        <div className="relative">
+                                            <label className="text-sm font-medium mb-1 block">Tipo de Imóvel</label>
+
+                                            <button
+                                                onClick={() => setIsOpen(!isOpen)}
+                                                className="w-full h-10 px-3 rounded-md border border-input bg-background flex items-center justify-between"
+                                            >
+                                                {propertyType
+                                                    ? propertyType.charAt(0).toUpperCase() + propertyType.slice(1)
+                                                    : "Todos os tipos"}
+                                                <ChevronDown
+                                                    className={`w-4 h-4 ml-2 transition-transform ${isOpen ? "rotate-180" : ""
+                                                        }`}
+                                                />
+                                            </button>
+                                            <div
+                                                className={`absolute w-full mt-1 bg-white border rounded-md shadow-md overflow-hidden transition-all duration-300 z-10 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                                                    }`}
+                                            >
+                                                <ul className="py-1">
+                                                    {[
+                                                        { value: "", label: "Todos os tipos" },
+                                                        { value: "casa", label: "Casa" },
+                                                        { value: "apartamento", label: "Apartamento" },
+                                                        { value: "terreno", label: "Terreno" },
+                                                        { value: "comercial", label: "Comercial" },
+                                                        { value: "mansão", label: "Mansão" },
+                                                    ].map((option) => (
+                                                        <li
+                                                            key={option.value}
+                                                            onClick={() => {
+                                                                setPropertyType(option.value);
+                                                                setIsOpen(false);
+                                                            }}
+                                                            className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                                        >
+                                                            {option.label}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="text-sm font-medium mb-1 block">Tipo de Transação</label>
+                                        <div className="flex gap-2">
+                                            <Button
+                                                variant={transactionType === "sale" ? "default" : "outline"}
+                                                size="sm"
+                                                className="flex-1"
+                                                onClick={() => toggleTransactionType("sale")}
+                                            >
+                                                Venda
+                                            </Button>
+                                            <Button
+                                                variant={transactionType === "rent" ? "default" : "outline"}
+                                                size="sm"
+                                                className="flex-1"
+                                                onClick={() => toggleTransactionType("rent")}
+                                            >
+                                                Aluguel
+                                            </Button>
+                                        </div>
                                     </div>
                                     <div>
                                         <label className="text-sm font-medium mb-1 block">Localização</label>
@@ -263,7 +325,7 @@ export default function Imoveis() {
                                             />
                                         </div>
                                     </div>
-                                    <Button className="w-full" onClick={clearFilters}>
+                                    <Button className="w-full hover:bg-[#a1a1a1]" onClick={clearFilters}>
                                         Remover Filtros
                                     </Button>
                                 </div>
@@ -295,15 +357,55 @@ export default function Imoveis() {
                                         </span>
                                     )}
                                 </div>
-                                <div className="flex justify-between items-center mb-6">
+                                <div className="flex justify-between items-center mb-6 relative z-10">
                                     <p className="text-muted-foreground">Mostrando {totalProperties} imóveis</p>
-                                    <select className="h-10 px-3 rounded-md border border-input bg-background" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-                                        <option value="newest">Mais recentes</option>
-                                        <option value="price-asc">Menor preço</option>
-                                        <option value="price-desc">Maior preço</option>
-                                        <option value="area-asc">Menor área</option>
-                                        <option value="area-desc">Maior área</option>
-                                    </select>
+                                    <div className="relative">
+                                        <label className="text-sm font-medium mb-1 block">Ordenar por</label>
+                                        <button
+                                            onClick={() => setSortOpen(!sortOpen)}
+                                            className="w-full h-10 px-3 rounded-md border border-input bg-background flex items-center justify-between"
+                                        >
+                                            {sortOption === "newest"
+                                                ? "Mais recentes"
+                                                : sortOption === "price-asc"
+                                                    ? "Menor preço"
+                                                    : sortOption === "price-desc"
+                                                        ? "Maior preço"
+                                                        : sortOption === "area-asc"
+                                                            ? "Menor área"
+                                                            : "Maior área"}
+                                            <ChevronDown
+                                                className={`w-4 h-4 ml-2 transition-transform ${sortOpen ? "rotate-180" : ""
+                                                    }`}
+                                            />
+                                        </button>
+                                        {sortOpen && (
+                                            <div
+                                                className="absolute w-full mt-1 bg-white border rounded-md shadow-md overflow-hidden transition-all duration-300 z-10"
+                                            >
+                                                <ul className="py-1">
+                                                    {[
+                                                        { value: "newest", label: "Mais recentes" },
+                                                        { value: "price-asc", label: "Menor preço" },
+                                                        { value: "price-desc", label: "Maior preço" },
+                                                        { value: "area-asc", label: "Menor área" },
+                                                        { value: "area-desc", label: "Maior área" },
+                                                    ].map((option) => (
+                                                        <li
+                                                            key={option.value}
+                                                            onClick={() => {
+                                                                setSortOption(option.value);
+                                                                setSortOpen(false);
+                                                            }}
+                                                            className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                                        >
+                                                            {option.label}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                                 {filteredProperties.length > 0 ? (
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -315,53 +417,6 @@ export default function Imoveis() {
                                     <div className="text-center py-12">
                                         <p className="text-xl font-medium">Nenhum imóvel encontrado com os filtros selecionados.</p>
                                         <p className="text-muted-foreground mt-2">Tente ajustar seus critérios de busca.</p>
-                                    </div>
-                                )}
-                                {filteredProperties.length > 0 && (
-                                    <div className="flex justify-center mt-8">
-                                        <div className="flex">
-                                            <Button variant="outline" size="icon" disabled>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="h-4 w-4"
-                                                >
-                                                    <path d="m15 18-6-6 6-6" />
-                                                </svg>
-                                            </Button>
-                                            <Button variant="outline" className="rounded-none bg-primary text-primary-foreground">
-                                                1
-                                            </Button>
-                                            <Button variant="outline" className="rounded-none">
-                                                2
-                                            </Button>
-                                            <Button variant="outline" className="rounded-none">
-                                                3
-                                            </Button>
-                                            <Button variant="outline" size="icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="h-4 w-4"
-                                                >
-                                                    <path d="m9 18 6-6-6-6" />
-                                                </svg>
-                                            </Button>
-                                        </div>
                                     </div>
                                 )}
                             </div>

@@ -11,10 +11,9 @@ export default function Header() {
     return (
         <header className="absolute top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 text-white">
             <div>
-                <h4 className="text-xl font-bold">Habitta</h4>
+                <Link href="/"><h4 className="text-xl font-bold">Habitta</h4></Link>
             </div>
 
-            {/* Menu padrão para telas médias e grandes */}
             <nav className="hidden md:flex">
                 <ul className="flex space-x-10 text-lg">
                     <Link href="/"><li className="cursor-pointer">Início</li></Link>
@@ -28,7 +27,6 @@ export default function Header() {
                 <button className="border px-4 py-2 rounded-md text-lg">Sign In</button>
             </div>
 
-            {/* Ícone do menu hamburguer */}
             <button
                 className="md:hidden block"
                 onClick={() => setMenuOpen(!menuOpen)}
@@ -36,7 +34,6 @@ export default function Header() {
                 {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
 
-            {/* Menu mobile */}
             {menuOpen && (
                 <div className="fixed top-0 right-0 w-full h-full bg-black shadow-lg p-6 flex flex-col items-center gap-6 md:hidden">
                     <button

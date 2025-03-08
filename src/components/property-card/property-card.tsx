@@ -28,7 +28,8 @@ export function PropertyCard({
     featured = false,
 }: PropertyCardProps) {
     return (
-        <div className={`rounded-lg overflow-hidden border bg-white ${featured ? "shadow-md" : ""}`}>
+        <div className={`rounded-lg overflow-hidden border bg-white transition-all duration-300 ${featured ? "shadow-md" : "shadow-sm"
+            } hover:shadow-lg hover:-translate-y-2`}>
             <div className="relative">
                 <Image
                     src={imageUrl || "/placeholder.svg?height=200&width=300"}

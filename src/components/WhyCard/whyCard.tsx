@@ -28,7 +28,7 @@ export default function WhyCard() {
             {cards.map(({ id, image, title, description }) => (
                 <div
                     key={id}
-                    className="relative w-[450px] max-w-sm rounded-xl overflow-hidden flex"
+                    className="relative w-[450px] max-w-sm rounded-xl overflow-hidden flex transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-lg"
                 >
                     <div className="relative rounded-l w-full flex flex-col items-center text-center gap-5 bg-white p-8">
                         <div className="bg-muted rounded-full p-2">

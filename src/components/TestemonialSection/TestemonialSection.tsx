@@ -13,7 +13,10 @@ export default function TestimonialSection() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {testimonials.map((testimonial) => (
-                    <div key={testimonial.id} className="bg-muted rounded-lg p-6">
+                    <div
+                        key={testimonial.id}
+                        className="bg-muted rounded-lg p-6 transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-lg"
+                    >
                         <div className="flex items-center gap-4 mb-4">
                             <Image
                                 src={testimonial.avatar || "/placeholder.svg"}
