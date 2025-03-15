@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏡 **Habitta - Imobiliária de Alto Padrão**
 
-## Getting Started
+Bem-vindo ao repositório da **Habitta**, uma imobiliária especializada na venda e aluguel de imóveis de alto padrão. Este site foi desenvolvido utilizando as tecnologias **Next.js**, **TypeScript**, **Tailwind CSS**, e **Shadcn/UI** para proporcionar uma experiência moderna e fluida aos usuários. 🌟
 
-First, run the development server:
+### 🚀 Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **🔍 Pesquisa de Imóveis:** Permite aos usuários procurar imóveis por localização, tipo e faixa de preço.
+- **🔧 Filtros Avançados:** Diversos filtros para refinar a busca, como número de quartos, banheiros, área do imóvel, entre outros.
+- **💻 Design Moderno:** Interface limpa e responsiva, com um design minimalista e sofisticado.
+- **🏠 Exibição de Detalhes:** Cada imóvel possui uma página com informações completas, fotos de alta qualidade e opções para entrar em contato.
+- **📱 Responsividade:** O site é totalmente responsivo, proporcionando uma experiência incrível tanto em dispositivos móveis quanto em desktops.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 💻 Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js:** Framework para React que oferece renderização do lado do servidor (SSR) e geração de sites estáticos (SSG), garantindo alta performance. ⚡
+- **TypeScript:** Linguagem com tipagem estática para aumentar a confiabilidade do código. 🔒
+- **Tailwind CSS:** Framework CSS utilitário para criar designs modernos e responsivos de forma rápida e fácil. 💨
+- **Shadcn/UI:** Biblioteca de componentes para UI, tornando a interface ainda mais funcional e bonita. 🎨
