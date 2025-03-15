@@ -23,7 +23,7 @@ export default function PropertyDetailPage() {
     if (!property) return notFound();
 
     return (
-        <section className="flex-1 flex justify-center">
+        <section className="flex-1 flex justify-center px-3">
             <div className="container">
                 <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white">
                     <div>
@@ -71,7 +71,7 @@ export default function PropertyDetailPage() {
                         Início
                     </Link>
                     <ChevronRight className="h-4 w-4" />
-                    <Link href="/properties" className="hover:text-foreground">
+                    <Link href="/imoveis" className="hover:text-foreground">
                         Imóveis
                     </Link>
                     <ChevronRight className="h-4 w-4" />

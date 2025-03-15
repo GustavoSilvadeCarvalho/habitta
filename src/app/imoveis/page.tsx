@@ -129,7 +129,7 @@ export default function Imoveis() {
 
     return (
         <div className="flex flex-col items-center min-h-screen">
-            <header className="sticky top-0 z-20 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white/70 backdrop-blur">
+            <header className="sticky top-0 z-20 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white">
                 <div>
                     <Link href="/"><h4 className="text-xl font-bold">Habitta</h4></Link>
                 </div>
@@ -170,7 +170,7 @@ export default function Imoveis() {
                     </div>
                 )}
             </header>
-            <main className="flex-1">
+            <main className="flex-1 px-3">
                 <div className="container py-8">
                     <h1 className="text-3xl font-bold mb-8 text-center">Imóveis Disponíveis</h1>
                     <Suspense fallback={<div>Carregando...</div>}>

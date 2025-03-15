@@ -10,7 +10,7 @@ export default function SobrePage() {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white/70 backdrop-blur">
+            <header className="sticky top-0 z-10 w-full flex justify-between items-center px-8 md:px-16 py-4 bg-white">
                 <div>
                     <Link href="/"><h4 className="text-xl font-bold">Habitta</h4></Link>
                 </div>
